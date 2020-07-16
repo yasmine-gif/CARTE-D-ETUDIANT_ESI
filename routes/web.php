@@ -18,3 +18,11 @@ Route::get('/', function () {
 Route::get('/index', function () {
     return view('default.layaut');
 });
+
+Route::get('/mail', 'MailController@index')->name('mail_index');
+Route::post('/mail/send', 'MailController@sender')->name('mail_sender');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
