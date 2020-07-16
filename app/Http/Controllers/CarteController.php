@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Etudiant;
 
 class CarteController extends Controller
 {
@@ -13,7 +14,8 @@ class CarteController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Ajouter une carte';
+        return view('pages.ajouter', ['title'=>$title]);
     }
 
     /**
@@ -34,7 +36,27 @@ class CarteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=request()->validate([
+            'matricule'=> ['required','string'],
+            'annee_academic'=> ['required','string'],
+            'nom'=> ['required','string'],
+            'prenom'=> ['required','string'],
+            'cyle'=> ['required','string'],
+            'nationalite'=> ['required','string'],
+            'photo'=> ['required','image']
+          ]);
+
+          $imagePath=request('photo')->store('images','public');
+          $etudiant=Etudiant::create([
+              'matricule'=>$data[ 'matricule'],
+              'annee_academic'=>$data[ 'annee_academic'],
+              'nom'=>$data[ 'nom'],
+              'prenom'=>$data[ 'prenom'],
+              'cyle'=>$data[ 'cyle'],
+              'nationalite'=>$data[ 'nationalite'],
+              'photo'=>$imagePath
+            ]);
+        return redirect()->route('Etudiant_store');
     }
 
     /**
