@@ -11,15 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/index', function () {
+Route::get('/', function () {
     return view('default.layaut');
-});
+})->middleware('auth');
+
+// Carte
 
 Route::get('/ajouter', 'CarteController@index')->name('carte_index');
+Route::get('/ajouter', 'CarteController@create')->name('carte_create');
+Route::post('/ajouter', 'CarteController@store')->name('carte_store');
+Route::get('/liste', 'CarteController@show')->name('carte_liste');
+
+
+
+// Mail
 Route::get('/mail', 'MailController@index')->name('mail_index');
 Route::post('/mail/send', 'MailController@sender')->name('mail_sender');
 
