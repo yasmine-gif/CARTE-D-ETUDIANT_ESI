@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/index', function () {
+    return view('default.layaut');
+});
+
+Route::get('/ajouter', 'CarteController@index')->name('carte_index');
+Route::get('/mail', 'MailController@index')->name('mail_index');
+Route::post('/mail/send', 'MailController@sender')->name('mail_sender');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
