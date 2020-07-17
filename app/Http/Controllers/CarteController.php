@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Etudiant;
+use App\Personne_a_prevenir;
+use App\Filiere;
 
 class CarteController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +17,6 @@ class CarteController extends Controller
      */
     public function index()
     {
-        $title = 'Ajouter une carte';
-        return view('pages.ajouter', ['title'=>$title]);
     }
 
     /**
@@ -25,7 +26,11 @@ class CarteController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Ajouter une carte';
+        $personne_a_prevenirs = Personne_a_prevenir :: all();
+        $filieres = Filiere :: all();
+
+        return view('pages.ajouter', ['title'=>$title], compact('personne_a_prevenirs', 'filieres'));
     }
 
     /**
@@ -36,7 +41,15 @@ class CarteController extends Controller
      */
     public function store(Request $request)
     {
+        $data_filiere = request()->validate([
+            'filiere_id' => ['required','string']
+            ]);
+
+            Filiere::create($data_filiere);
+
         $data=request()->validate([
+            'personne_a_prevenir_id'=>'required|integer',           
+            'filiere_id'=>'required|integer',
             'matricule'=> ['required','string'],
             'annee_academic'=> ['required','string'],
             'nom'=> ['required','string'],
@@ -48,13 +61,15 @@ class CarteController extends Controller
 
           $imagePath=request('photo')->store('images','public');
           $etudiant=Etudiant::create([
-              'matricule'=>$data[ 'matricule'],
-              'annee_academic'=>$data[ 'annee_academic'],
-              'nom'=>$data[ 'nom'],
-              'prenom'=>$data[ 'prenom'],
-              'cyle'=>$data[ 'cyle'],
-              'nationalite'=>$data[ 'nationalite'],
-              'photo'=>$imagePath
+                'personne_a_prevenir_id'=>$data['personne_a_prevenir_id'],
+                'filiere_id'=>$data['filiere_id'],
+                'matricule'=>$data[ 'matricule'],
+                'annee_academic'=>$data[ 'annee_academic'],
+                'nom'=>$data[ 'nom'],
+                'prenom'=>$data[ 'prenom'],
+                'cyle'=>$data[ 'cyle'],
+                'nationalite'=>$data[ 'nationalite'],
+                'photo'=>$imagePath
             ]);
         return redirect()->route('Etudiant_store');
     }
@@ -65,9 +80,11 @@ class CarteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $title = 'Liste des cartes';
+
+        return view('pages.liste', ['title'=> $title]);
     }
 
     /**

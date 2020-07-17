@@ -7,19 +7,24 @@
       <!-- Bootstrap core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/dashboard.css')}}" rel="stylesheet">
-    <link href="{{asset('css/photo.css')}}" rel="stylesheet">
+    <link href="{{asset('css/liste.css')}}" rel="stylesheet">
     <script src="{{asset('Js/bootstrap.min.js')}}"></script>
   </head>
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow bg-color">
         <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index"><img src="{{asset('logo/logo.jpg')}}" alt="logo" width="200px" height="60px"></a>
+        <input type="search" name="" id="" placeholder="search..." class="form-control form-control-dark w-100">
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <ul class="navbar-nav px-3">
           <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
+            <div>
+              <a class="dropdown-item text_color" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+              </form>
+            </div>
           </li>
         </ul>
     </nav>
@@ -29,13 +34,13 @@
           <div class="sidebar-sticky pt-3 sidebar-sticky-color">
             <ul class="nav flex-column mb-2">
               <li class="nav-item border-bottom">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/">
                   <span data-feather="file-text"></span>
                   <img src="{{asset('logo/.png')}}" alt="user">
                 </a>
               </li>
               <li class="nav-item border-bottom">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="liste">
                   <span data-feather="file-text"></span>
                   Liste&nbspdes&nbspcartes
                 </a>
@@ -72,7 +77,9 @@
         </div>
     </div>
     <script src="{{asset('Js/jquery.min.js')}}"></script>
-    <script src="{{asset('Js/dashboard.min.js')}}"></script>
-    <script src="{{asset('Js/photo.min.js')}}"></script></body>
+    <script src="{{asset('Js/dashboard.js')}}"></script>
+    <script src="{{asset('Js/hidden_show.js')}}"></script>
+    <script src="{{asset('Js/liste.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
   </body>
 </html>
